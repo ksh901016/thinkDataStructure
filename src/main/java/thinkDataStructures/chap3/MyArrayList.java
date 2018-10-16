@@ -1,4 +1,4 @@
-package thinkDataStructures.chap2;
+package thinkDataStructures.chap3;
 
 import java.util.Collection;
 import java.util.Iterator;
