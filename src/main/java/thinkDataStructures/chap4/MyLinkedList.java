@@ -137,20 +137,58 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int index, E element) {
-		// TODO Auto-generated method stub
-		
+		if(index == 0){
+			head = new Node(element, head);
+		}else{
+			Node node = getNode(index-1);
+			node.next = new Node(element, node.next);
+		}
+		size++;
+	}
+	
+	
+	private Node getNode(int index){
+		if(index < 0 || index >= size){
+			throw new IndexOutOfBoundsException();
+		}
+		Node node = head;
+		for(int i=0; i<index; i++){
+			node = node.next;
+		}
+		return node;
 	}
 
 	@Override
 	public E remove(int index) {
-		// TODO 채워보세요 http://bit.ly/2KG3pQt 페이지 참고
-		return null;
+		E element = get(index);
+		if(index == 0){
+			head = head.next;
+		}else{
+			Node node = getNode(index-1);
+			node.next = node.next.next;
+		}
+		size--;
+		return element;
 	}
 
 	@Override
 	public int indexOf(Object o) {
-		// TODO 고민해보기 null을 어떻게 처리할 것인
-		return 0;
+		Node node = head;
+		for(int i=0; i<size; i++){
+			if(equals(o, node.data)){
+				return i;
+			}
+			node = node.next;
+		}
+		return -1;
+	}
+	
+	private boolean equals(Object target, Object element){
+		if(target == null){
+			return element == null;
+		}else{
+			return target.equals(element);
+		}
 	}
 
 	@Override
