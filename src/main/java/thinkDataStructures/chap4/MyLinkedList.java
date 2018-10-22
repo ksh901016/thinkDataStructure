@@ -83,7 +83,7 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
