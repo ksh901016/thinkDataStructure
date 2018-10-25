@@ -23,7 +23,7 @@ public class WikiNodeIterable implements Iterable<Node>{
 		return new WikiNodeIterator(root);
 	}
 
-	// Innter class that implements the Iterator
+	// Inner class that implements the Iterator
 	private class WikiNodeIterator implements Iterator<Node>{
 
 		// this stack keeps track of the Nodes waiting to be visited.
