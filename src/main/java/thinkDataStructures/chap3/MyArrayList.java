@@ -1,5 +1,6 @@
 package thinkDataStructures.chap3;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -17,20 +18,17 @@ public class MyArrayList<E> implements List<E> {
     
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+        return size == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        // TODO Auto-generated method stub
-        return false;
+        return indexOf(o) != -1;
     }
 
     @Override
@@ -41,14 +39,12 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public Object[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
+        return Arrays.copyOf(array, size);
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        // TODO Auto-generated method stub
-        return null;
+    	throw new UnsupportedOperationException();
     }
 
     @Override
@@ -65,26 +61,36 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean remove(Object o) {
-        // TODO Auto-generated method stub
-        return false;
+    	int index = indexOf(o);
+    	if(index == -1){
+    		return false;
+    	}
+    	remove(index);
+        return true;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+    	for(Object o : c){
+    		if(!contains(o)){
+    			return false;
+    		}
+    	}
+        return true;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        // TODO Auto-generated method stub
-        return false;
+    	boolean flag = true;
+    	for(E o : c){
+    		flag &= add(o);
+    	}
+        return flag;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        // TODO Auto-generated method stub
-        return false;
+    	throw new UnsupportedOperationException();
     }
 
     @Override
@@ -98,14 +104,12 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+    	throw new UnsupportedOperationException();
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        
+        this.size = 0;
     }
 
     @Override
@@ -168,26 +172,35 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public int lastIndexOf(Object o) {
-        // TODO Auto-generated method stub
-        return 0;
+    	for(int i=size-1; i>=0; i--){
+    		if(equals(o, array[i])){
+    			return i;
+    		}
+    	}
+        return -1;
     }
 
     @Override
     public ListIterator<E> listIterator() {
-        // TODO Auto-generated method stub
-        return null;
+    	// make a copy of the array
+    	E[] copy = Arrays.copyOf(array, size);
+    	// make a list and return an iterator
+        return Arrays.asList(copy).listIterator();
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        // TODO Auto-generated method stub
-        return null;
+    	E[] copy = Arrays.copyOf(array, size);
+        return Arrays.asList(copy).listIterator(index);
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        // TODO Auto-generated method stub
-        return null;
+    	if(fromIndex < 0 || toIndex >= size || fromIndex > toIndex){
+    		throw new IndexOutOfBoundsException();
+    	}
+    	E[] copy = Arrays.copyOfRange(array, fromIndex, toIndex);
+        return Arrays.asList(copy);
     }
 
 }
