@@ -1,5 +1,6 @@
 package thinkDataStructures.chap4;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -28,42 +29,48 @@ public class MyLinkedList<E> implements List<E> {
 			this.data = data;
 			this.next = next;
 		}
+		
+		public String toString(){
+			return "Node (" + data.toString() + ")";
+		}
 	}
 	
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.size == 0;
 	}
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		return indexOf(o) != -1;
 	}
 
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("unchecked")
+		E[] array = (E[]) toArray();
+		return Arrays.asList(array).iterator();
 	}
 
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		Object[] array = new Object[size];
+		int i=0;
+		for(Node node = head; node != null; node = node.next){
+			array[i] = node.data;
+			i++;
+		}
+		return array;
 	}
 
 	@Override
 	public <T> T[] toArray(T[] a) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -83,38 +90,50 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public boolean remove(Object o) {
-		
-		return false;
+		int index = indexOf(o);
+		if(index == -1){
+			return false;
+		}
+		remove(index);
+		return true;
 	}
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		for(Object obj : c){
+			if(contains(obj)){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag = true;
+		for(E element : c){
+			flag &= add(element);
+		}
+		return flag;
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends E> c) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag = true;
+		for(Object obj : c){
+			flag &= remove(obj);
+		}
+		return flag;
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -125,14 +144,16 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public E get(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		Node node = getNode(index);
+		return node.data;
 	}
 
 	@Override
 	public E set(int index, E element) {
-		// TODO Auto-generated method stub
-		return null;
+		Node node = getNode(index);
+		E old = node.data;
+		node.data = element;
+		return old;
 	}
 
 	@Override
@@ -193,26 +214,42 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int lastIndexOf(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+		Node node = head;
+		int index = -1;
+		for(int i=0; i<size; i++){
+			if(equals(o, node.data)){
+				index = i;
+			}
+			node = node.next;
+		}
+		return index;
 	}
 
 	@Override
 	public ListIterator<E> listIterator() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ListIterator<E> listIterator(int index) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<E> subList(int fromIndex, int toIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		if(fromIndex < 0 || toIndex >= size || fromIndex > toIndex){
+			throw new IndexOutOfBoundsException();
+		}
+		
+		MyLinkedList<E> list = new MyLinkedList<>();
+		int i = 0;
+		for(Node node = head; node != null ; node = node.next){
+			if(i >=fromIndex && i <= toIndex){
+				list.add(node.data);
+			}
+			i++;
+		}
+		return list;
 	}
 
 }
