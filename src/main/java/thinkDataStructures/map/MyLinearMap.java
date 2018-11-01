@@ -45,7 +45,11 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	}
 	
 	private Entry findEntry(Object target){
-		// TODO
+		for(Entry entry : entries){
+			if(equals(target, entry.getKey())){
+				return entry;
+			}
+		}
 		return null;
 	}
 
@@ -56,7 +60,6 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 				return true;
 			}
 		}
-			
 		return false;
 	}
 	
@@ -73,9 +76,12 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public V get(Object arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public V get(Object key) {
+		Entry entry = findEntry(key);
+		if(entry == null){
+			return null;
+		}
+		return entry.getValue();
 	}
 
 	@Override
@@ -94,10 +100,17 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put(K key, V value) {
-		// TODO Auto-generated method stub
-		return null;
+		Entry entry = findEntry(key);
+		if(entry == null){
+			entries.add(new Entry(key, value));
+			return null;
+		}else{
+			V oldValue = entry.value;
+			entry.setValue(value);
+			return oldValue;
+		}
 	}
-
+	
 	@Override
 	public void putAll(Map<? extends K, ? extends V> map) {
 		for(Map.Entry<? extends K, ? extends V> entry : map.entrySet()){
@@ -106,9 +119,15 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public V remove(Object arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public V remove(Object key) {
+		Entry entry = findEntry(key);
+		if(entry == null){
+			return null;
+		}else{
+			V value = entry.getValue();
+			entries.remove(entry);
+			return value;
+		}
 	}
 
 	@Override
@@ -123,6 +142,18 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 			set.add(entry.getValue());
 		}
 		return set;
+	}
+	
+	public static void main(String[] args){
+		Map<String, Integer> map = new MyLinearMap<>();
+		map.put("Word1", 1);
+		map.put("Word2", 2);
+		Integer value = map.get("Word1");
+		System.out.println(value);
+		
+		for(String key : map.keySet()){
+			System.out.println(key + ", " + map.get(key));
+		}
 	}
 
 }
