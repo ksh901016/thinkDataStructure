@@ -1,4 +1,4 @@
-package thinkDataStructures.chap2;
+package thinkDataStructures.sort;
 
 public class SelectionSort {
     // i와 j의 위치에 있는 값을 바꾼다.

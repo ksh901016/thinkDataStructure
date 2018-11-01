@@ -1,4 +1,4 @@
-package thinkDataStructures.chap4;
+package thinkDataStructures.linkedList;
 
 public class ListNode {
 	public Object data;

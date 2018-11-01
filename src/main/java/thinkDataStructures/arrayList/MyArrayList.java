@@ -1,4 +1,4 @@
-package thinkDataStructures.chap3;
+package thinkDataStructures.arrayList;
 
 import java.util.Arrays;
 import java.util.Collection;
