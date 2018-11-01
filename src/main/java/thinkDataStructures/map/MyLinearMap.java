@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class MyLinearMap<K, V> implements Map<K, V> {
-	
+	// MyLinearMap 기본 구현
 	private List<Entry> entries = new ArrayList<>();
 	
 	public class Entry implements Map.Entry<K, V>{
