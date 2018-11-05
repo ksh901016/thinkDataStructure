@@ -144,6 +144,10 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 		return set;
 	}
 	
+	public Collection<? extends Map.Entry<K, V>> getEntires(){
+		return entries;
+	}
+	
 	public static void main(String[] args){
 		Map<String, Integer> map = new MyLinearMap<>();
 		map.put("Word1", 1);
