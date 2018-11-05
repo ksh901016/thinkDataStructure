@@ -29,7 +29,7 @@ public class MyBetterMap<K, V> implements Map<K, V> {
 	protected MyLinearMap<K, V> chooseMap(Object key){
 		int index = 0;
 		if(key != null){
-			Math.abs(key.hashCode());
+			index = Math.abs(key.hashCode()) % maps.size();
 		}
 		return maps.get(index);
 	}
