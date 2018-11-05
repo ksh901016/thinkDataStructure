@@ -6,7 +6,7 @@ import java.util.Map;
 public class MyHashMap<K, V> extends MyBetterMap<K, V> implements Map<K,V>{
 
 	// 재해쉬하기 전 하위 맵당 평균 엔트리 개수
-	private static final double FACTOR = 1.0;
+	protected static final double FACTOR = 1.0;
 	
 	@Override
 	public V put(K key, V value){
