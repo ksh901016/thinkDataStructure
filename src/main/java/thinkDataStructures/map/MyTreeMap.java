@@ -1,8 +1,12 @@
 package thinkDataStructures.map;
 
 import java.util.Collection;
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 public class MyTreeMap<K,V> implements Map<K,V>{
@@ -27,8 +31,10 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 			throw new IllegalArgumentException();
 		}
 		
+		@SuppressWarnings("unchecked")
 		Comparable<? super K> k = (Comparable<? super K>) target;
 		
+		// 탐색
 		Node node = root;
 		while(node != null){
 			int cmp = k.compareTo(node.key);
@@ -51,14 +57,12 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 	@Override
 	public boolean containsKey(Object key) {
-		// TODO Auto-generated method stub
-		return false;
+		return findNode(key) != null;
 	}
 
 	@Override
@@ -69,8 +73,8 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 
 	@Override
 	public V get(Object key) {
-		// TODO Auto-generated method stub
-		return null;
+		Node node = findNode(key);
+		return node == null ? null : node.value;
 	}
 
 	@Override
@@ -89,13 +93,39 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 	}
 	
 	private V putHelper(Node node, K key, V value){
-		return null;
+		@SuppressWarnings("unchecked")
+		Comparable<? super K> k = (Comparable<? super K>) key;
+		
+		int cmp = k.compareTo(node.key);
+		if(cmp < 0){
+			if(node.left == null){
+				node.left = new Node(key, value);
+				size++;
+				return null;
+			}else{
+				return putHelper(node.left, key, value);
+			}
+		}
+		
+		if(cmp > 0){
+			if(node.right == null){
+				node.right = new Node(key, value);
+				size++;
+				return null;
+			}else{
+				return putHelper(node.right, key, value);
+			}
+		}
+		
+		V oldValue = node.value;
+		node.value = value;
+		return oldValue;
 	}
 
 	@Override
 	public V remove(Object key) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO 구현해보기
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -119,8 +149,39 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 
 	@Override
 	public Collection<V> values() {
-		// TODO Auto-generated method stub
-		return null;
+		return dfs();
+	}
+	
+	// 깊이우선탐색
+	private Set<V> dfs(){
+		Set<V> set = new LinkedHashSet<>();
+		
+		Deque<Node> stack = new LinkedList<>();
+		stack.push(root);
+		while(!stack.isEmpty()){
+			Node node = stack.pop();
+			if(node == null) continue;
+			set.add(node.value);
+			stack.push(node.left);
+			stack.push(node.right);
+		}
+		return set;
+	}
+	
+	// 넓이우선탐색
+	private Set<V> bfs(){
+		Set<V> set=  new LinkedHashSet<>();
+		
+		Queue<Node> queue = new LinkedList<>();
+		queue.offer(root);
+		while(!queue.isEmpty()){
+			Node node = queue.poll();
+			if(node == null) continue; // TODO Break 문도 잘 돌아가는지 확인
+			set.add(node.value);
+			queue.offer(root.left);
+			queue.offer(root.right);
+		}
+		return set;
 	}
 
 	@Override
