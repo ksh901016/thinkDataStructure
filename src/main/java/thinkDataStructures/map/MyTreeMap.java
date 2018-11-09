@@ -2,7 +2,6 @@ package thinkDataStructures.map;
 
 import java.util.Collection;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
@@ -67,8 +66,30 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 
 	@Override
 	public boolean containsValue(Object value) {
-		// TODO Auto-generated method stub
-		return false;
+		return containsValueHelper(root, value);
+	}
+	
+	private boolean containsValueHelper(Node node, Object value) {
+	    if(node == null) {
+	        return false;
+	    }
+	    if(equals(value, node.value)) {
+	        return true;
+	    }
+	    if(containsValueHelper(node.left, value)) {
+	        return true;
+	    }
+	    if(containsValueHelper(node.right, value)) {
+	        return true;
+	    }
+	    return false;
+	}
+	
+	private boolean equals(Object target, Object obj) {
+	    if(target == null) {
+	        return obj == null;
+	    }
+	    return target.equals(obj);
 	}
 
 	@Override
@@ -129,9 +150,10 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 	}
 
 	@Override
-	public void putAll(Map<? extends K, ? extends V> m) {
-		// TODO Auto-generated method stub
-		
+	public void putAll(Map<? extends K, ? extends V> map) {
+		for(Entry<? extends K, ? extends V> entry : map.entrySet()) {
+		    put(entry.getKey(), entry.getValue());
+		}
 	}
 
 	@Override
@@ -195,8 +217,7 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 
 	@Override
 	public Set<Map.Entry<K, V>> entrySet() {
-		// TODO Auto-generated method stub
-		return null;
+	    throw new UnsupportedOperationException();
 	}
 
 }
