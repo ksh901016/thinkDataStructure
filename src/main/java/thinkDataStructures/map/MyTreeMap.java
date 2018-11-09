@@ -144,16 +144,26 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 	public Set<K> keySet() {
 		Set<K> set = new LinkedHashSet<K>();
 		
-		return set;
+		return inorder(root, set);
+	}
+	
+	// 중위순회 
+	public Set<K> inorder(Node root, Set<K> set){
+	    if(root != null) {
+    	    inorder(root.left, set);
+    	    set.add(root.key);
+    	    inorder(root.right, set);
+	    }
+	    return set;
 	}
 
 	@Override
 	public Collection<V> values() {
-		return dfs();
+		return getValuesByDFS();
 	}
 	
 	// 깊이우선탐색
-	private Set<V> dfs(){
+	private Set<V> getValuesByDFS(){
 		Set<V> set = new LinkedHashSet<>();
 		
 		Deque<Node> stack = new LinkedList<>();
@@ -169,7 +179,7 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 	}
 	
 	// 넓이우선탐색
-	private Set<V> bfs(){
+	private Set<V> getValuesByBFS(){
 		Set<V> set=  new LinkedHashSet<>();
 		
 		Queue<Node> queue = new LinkedList<>();
