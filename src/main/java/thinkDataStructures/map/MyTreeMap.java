@@ -143,18 +143,17 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 	@Override
 	public Set<K> keySet() {
 		Set<K> set = new LinkedHashSet<K>();
-		
-		return inorder(root, set);
+		inorder(root, set);
+		return set;
 	}
 	
 	// 중위순회 
-	public Set<K> inorder(Node root, Set<K> set){
+	public void inorder(Node root, Set<K> set){
 	    if(root != null) {
     	    inorder(root.left, set);
     	    set.add(root.key);
     	    inorder(root.right, set);
 	    }
-	    return set;
 	}
 
 	@Override
