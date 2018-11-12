@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.UUID;
 
 public class MyTreeMap<K,V> implements Map<K,V>{
 	
@@ -219,5 +220,19 @@ public class MyTreeMap<K,V> implements Map<K,V>{
 	public Set<Map.Entry<K, V>> entrySet() {
 	    throw new UnsupportedOperationException();
 	}
-
+	
+	public int getHeight(){
+		return heightHelper(root);
+	}
+	
+	private int heightHelper(Node node){
+		if(node == null){
+			return 0;
+		}
+		int left = heightHelper(node.left);
+		int right = heightHelper(node.right);
+		return Math.max(left, right) + 1;
+	}
+	
+	// TODO 반복문으로 height를 얻는 코드를 구현해 보기
 }
