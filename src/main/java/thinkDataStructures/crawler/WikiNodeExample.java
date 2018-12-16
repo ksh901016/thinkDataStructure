@@ -27,7 +27,8 @@ public class WikiNodeExample {
 		Element content = doc.getElementById("mw-content-text");
 		Elements paragraphs = content.select("p");
 		Element firstPara = paragraphs.get(1);
-		
+		System.out.println(firstPara.toString());
+
 		recursiveDFS(firstPara);
 		System.out.println();
 		
@@ -61,7 +62,7 @@ public class WikiNodeExample {
 			}
 			
 			List<Node> nodes = new ArrayList<>(node.childNodes());
-			Collections.reverse(nodes);
+			Collections.reverse(nodes); // 스택은 후입선출이기 때문 
 			
 			for(Node child : nodes){
 				stack.push(child);

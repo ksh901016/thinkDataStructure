@@ -17,7 +17,12 @@ public class WikiPhilosophy {
         String source = "https://en.wikipedia.org/wiki/Java_(programming_language)";
         
         Elements paras = fetcher.fetchWikipedia(source);
-        Element firstData = paras.get(1);
+        Element firstData = paras.get(2);
+        
+        Iterable<Node> iter = new WikiNodeIterable(firstData);
+        for(Node node : iter) {
+            
+        }
         
         // DFS로 탐색해야함 DOM트리 구조를 읽어야하기 때문에 
         

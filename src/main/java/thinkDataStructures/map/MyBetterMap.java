@@ -22,7 +22,7 @@ public class MyBetterMap<K, V> implements Map<K, V> {
 	protected void makeMaps(int k){
 		maps = new ArrayList<>(k);
 		for(int i=0; i<k; i++){
-			maps.add(new MyLinearMap<>());
+			maps.add(new MyLinearMap<K, V>());
 		}
 	}
 	
