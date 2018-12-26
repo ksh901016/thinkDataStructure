@@ -29,13 +29,16 @@ public class WikiNodeExample {
 		Element firstPara = paragraphs.get(1);
 		System.out.println(firstPara.toString());
 
-		recursiveDFS(firstPara);
+		//recursiveDFS(firstPara);
 		System.out.println();
 		
 		Iterable<Node> iter = new WikiNodeIterable(firstPara);
 		for (Node node: iter) {
 			if (node instanceof TextNode) {
-				System.out.print(node);
+				System.out.println("TextNode ============" + node);
+			}
+			if(node instanceof Element){
+				System.out.println("Element ============" + node);
 			}
 		}
 	}

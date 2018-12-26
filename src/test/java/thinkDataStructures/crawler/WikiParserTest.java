@@ -44,30 +44,11 @@ public class WikiParserTest {
 		WikiParser wp = new WikiParser(paragraphs);
 		Element ele = wp.findFirstLink();
 		String href = ele.attr("href");
+		System.out.println("href : " + href);
+		System.out.println(ele.attr("abs:href"));
 		assertEquals("/wiki/Programming_language", href);
 	}
 	
-	
-	private boolean validLink(Element element){
-    	// a 태그존재 유무
-    	if(!element.tagName().equals("a")){
-    		return false;
-    	}
-    	// italic체 유무
-    	if(isItalic(element)){
-    		return false;
-    	}
-    	// bookmark
-    	if(startsWith(element, "#")){
-    		return false;
-    	}
-    	// wikipedia help page
-    	if(startsWith(element, "/wiki/Help:")){
-    		return false;
-    	}
-    	
-    	return true;
-    }
 	
 	private boolean isItalic(Element element){
     	while(element != null){

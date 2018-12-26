@@ -12,7 +12,7 @@ import org.jsoup.select.Elements;
 public class WikiParser {
 
     private Elements paragraphs;
-    private Deque<String> parenthesisStack;
+    private Deque<String> parenthesisStack; // 괄호 검사때 사용되는 stack
     
     public WikiParser(Elements p) {
         this.paragraphs = p;
@@ -50,6 +50,10 @@ public class WikiParser {
         return null;
     }
     
+    /**
+     * (예시 : <a href="...">링크</a>) 로 존재시, 나중에 가록안에 a태그가 있는지 검사하기 위한 절차
+     * @param node
+     */
     private void processTextNode(TextNode node) {
         StringTokenizer st = new StringTokenizer(node.text(), " ()", true); // include delimiter
         while(st.hasMoreTokens()){
